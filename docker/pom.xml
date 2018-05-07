@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.thorntail</groupId>
+    <artifactId>rhsummit-root</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>rhsummit-jaeger-docker</artifactId>
+
+  <name>RedHat Summit - Jaeger All in One</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.24.0</version>
+        <configuration>
+          <images>
+            <image>
+              <name>jaegertracing/all-in-one</name>
+              <alias>jaeger</alias>
+              <run>
+                <env>
+                  <COLLECTOR_ZIPKIN_HTTP_PORT>9411</COLLECTOR_ZIPKIN_HTTP_PORT>
+                </env>
+                <ports>
+                  <port>5775:5775/udp</port>
+                  <port>6831:6831/udp</port>
+                  <port>6832:6832/udp</port>
+                  <port>5778:5778</port>
+                  <port>16686:16686</port>
+                  <port>14268:14268</port>
+                  <port>9411:9411</port>
+                </ports>
+                <wait>
+                  <tcp>
+                    <mode>mapped</mode>
+                    <ports>
+                      <port>16686</port>
+                    </ports>
+                  </tcp>
+                  <time>10000</time>
+                </wait>
+              </run>
+            </image>
+            <image>
+              <name>prom/prometheus</name>
+              <alias>prometheus</alias>
+              <run>
+                <extraHosts>
+                  <host>app.local:192.168.1.22</host>
+                </extraHosts>
+                <ports>
+                  <port>9090:9090</port>
+                </ports>
+                <volumes>
+                  <bind>
+                    <volume>./prometheus.yml:/etc/prometheus/prometheus.yml</volume>
+                  </bind>
+                </volumes>
+                <wait>
+                  <tcp>
+                    <mode>mapped</mode>
+                    <ports>
+                      <port>9090</port>
+                    </ports>
+                  </tcp>
+                  <time>10000</time>
+                </wait>
+              </run>
+            </image>
+          </images>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
