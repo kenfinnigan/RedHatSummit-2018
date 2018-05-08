@@ -1,0 +1,6 @@
+datasource:
+  NamesDS:
+    username: sa
+    password: sa
+    connection-url: 'jdbc:h2:mem:'
+    driver: h2
