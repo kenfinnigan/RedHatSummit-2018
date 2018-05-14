@@ -4,3 +4,21 @@ datasource:
     password: sa
     connection-url: 'jdbc:h2:mem:'
     driver: h2
+    trace: 'ACTIVE'
+
+jpa:
+  NamePU:
+    trace: 'ACTIVE'
+
+jaeger:
+  service-name: 'Cute'
+  sampler:
+    type: 'const'
+    param: 1.0
+  endpoint: 'http://localhost:14268/api/traces'
+
+web:
+  primary:
+    port: 8200
+  management:
+    port: 8210

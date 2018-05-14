@@ -22,6 +22,10 @@
       <groupId>io.thorntail</groupId>
       <artifactId>thorntail-jpa</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.uber.jaeger</groupId>
+      <artifactId>jaeger-core</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.yaml</groupId>

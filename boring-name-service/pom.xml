@@ -14,6 +14,18 @@
   <name>RedHat Summit - Boring Name Service</name>
 
   <dependencies>
+    <dependency>
+      <groupId>io.thorntail</groupId>
+      <artifactId>thorntail-health</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.thorntail</groupId>
+      <artifactId>thorntail-metrics</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.thorntail</groupId>
+      <artifactId>thorntail-openapi</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -21,6 +33,23 @@
       <plugin>
         <groupId>io.thorntail</groupId>
         <artifactId>thorntail-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.jboss.jandex</groupId>
+        <artifactId>jandex-maven-plugin</artifactId>
+        <version>1.0.5</version>
+        <executions>
+          <execution>
+            <id>make-index</id>
+            <goals>
+              <goal>jandex</goal>
+            </goals>
+            <!-- phase is 'process-classes by default' -->
+            <configuration>
+              <indexName>thorntail.idx</indexName>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

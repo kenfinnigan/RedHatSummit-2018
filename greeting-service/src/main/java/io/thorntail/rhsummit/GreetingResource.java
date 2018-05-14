@@ -9,19 +9,23 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+
 /**
  * @author Ken Finnigan
  */
 @Path("/")
 public class GreetingResource {
 
-    private static final String NAME_SERVICE_URL = "http://localhost:8100";
+    private static final String NAME_SERVICE_URL = "http://localhost:8200";
 
     @GET
     @Path("/greeting")
     @Produces("application/json")
+    @Retry(maxRetries = 2)
+    @Fallback(fallbackMethod = "greetingFallback")
     public Response greeting() {
-        try {
             Client client = ClientBuilder.newBuilder().build();
             WebTarget webTarget = client.target(NAME_SERVICE_URL);
             Invocation.Builder requestBuilder = webTarget.path("/api/name").request();
@@ -31,11 +35,11 @@ public class GreetingResource {
             return Response.ok()
                     .entity(new Greeting(String.format("Hello %s", name)))
                     .build();
-        } catch (Exception e) {
-            return Response.serverError()
-                    .entity("Failed to communicate with " + NAME_SERVICE_URL + " due to: " + e.getMessage())
-                    .build();
-        }
+    }
+
+    public Response greetingFallback() {
+        return Response.ok()
+                .entity(new Greeting("Greetings from a fallback")).build();
     }
 
     static class Greeting {

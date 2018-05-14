@@ -14,6 +14,14 @@
   <name>RedHat Summit - Greeting Service</name>
 
   <dependencies>
+    <dependency>
+      <groupId>io.thorntail</groupId>
+      <artifactId>thorntail-faulttolerance</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.uber.jaeger</groupId>
+      <artifactId>jaeger-core</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

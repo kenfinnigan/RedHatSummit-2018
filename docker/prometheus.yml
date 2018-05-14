@@ -3,7 +3,7 @@ scrape_configs:
     scrape_interval: 15s
 
     static_configs:
-      - targets: ['app.local:8100']
+      - targets: ['app.local:8110']
 
   - job_name: 'cute-name-service'
     scrape_interval: 15s
