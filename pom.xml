@@ -12,7 +12,7 @@
 
   <properties>
     <version.thorntail>4.0.0-SNAPSHOT</version.thorntail>
-    <version.h2>1.4.197</version.h2>
+    <version.h2>2.0.206</version.h2>
   </properties>
 
   <modules>
